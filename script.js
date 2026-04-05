@@ -1,45 +1,31 @@
-body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+const CELL_AMOUNT = 64;
+let current_color = "green";
+
+let container = document.querySelector('.container');
+let palette = document.querySelector('.color-palette');
+
+for (let i = 0; i < CELL_AMOUNT; i += 1) {
+    let newElement = document.createElement('div');
+    newElement.classList.add('cell');
+
+    newElement.addEventListener("click", function(event) {
+        event.target.style.backgroundColor = current_color;
+    });
+
+    container.appendChild(newElement);
 }
 
-.cell {
-    height: 50px;
-    width: 50px;
-    border: 3px solid pink;
-}
+let colorOptions = palette.querySelectorAll('.color-option');
 
-.container {
-    display: grid;
-    grid-template-columns: repeat(8, 55px);
-    padding: 0px 10px;
-    height: 50px;
-    width: 50px;
-    cursor: pointer;
-}
+colorOptions.forEach(option => {
+    if (option.dataset.color === current_color) {
+        option.classList.add('active');
+    }
 
-.color-palette {
-    display: grid;
-    grid-template-columns: repeat(9, 55px);
-    padding: 10px;
-    /* background-color: #f0f0f0; |задник для палитры */
-    border-radius: 3px;
-}
+    option.addEventListener('click', function() {
+        colorOptions.forEach(opt => opt.classList.remove('active'));
+        current_color = this.dataset.color;
+        this.classList.add('active');
+    });
 
-.color-option {
-    height: 50px;
-    width: 50px;
-    border: 3px solid pink;
-    cursor: pointer;
-    transition: transform 0.2s, border-color 0.2s;
-}
-
-.color-option:hover {
-    transform: scale(1.25);
-}
-
-.color-option.active {
-    transform: scale(1.15);
-}
+Function
